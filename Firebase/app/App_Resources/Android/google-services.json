@@ -1,9 +1,9 @@
 {
   "project_info": {
     "project_number": "1052836194035",
-    "firebase_url": "https://n-plugin-test.firebaseio.com",
-    "project_id": "n-plugin-test",
-    "storage_bucket": "n-plugin-test.appspot.com"
+    "firebase_url": "https://mercury-f8270.firebaseio.com",
+    "project_id": "org.nativescript.firebasedemo",
+    "storage_bucket": ""
   },
   "client": [
     {

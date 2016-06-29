@@ -7,21 +7,21 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>1052836194035-l81fsjai1u40ocnqjcpnoebnnsltt03b.apps.googleusercontent.com</string>
+	<string>937345186411-na5bp3cq1s0ked41307fdn8e51bqfjvq.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1052836194035-l81fsjai1u40ocnqjcpnoebnnsltt03b</string>
+	<string>com.googleusercontent.apps.937345186411-na5bp3cq1s0ked41307fdn8e51bqfjvq</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDuXPZxKamjttwP_hYpnX7MvDoZWhAVVtk</string>
+	<string>AIzaSyBnf2qBdsSWnglptO-Yix84kIvQ3GCOkIM</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1052836194035</string>
+	<string>937345186411</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>org.nativescript.firebasedemo</string>
 	<key>PROJECT_ID</key>
-	<string>n-plugin-test</string>
+	<string>mercury-f8270</string>
 	<key>STORAGE_BUCKET</key>
-	<string>n-plugin-test.appspot.com</string>
+	<string>mercury-f8270.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<true/>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -33,8 +33,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1052836194035:ios:443e3741d53b6bc3</string>
+	<string>1:937345186411:ios:443e3741d53b6bc3</string>
 	<key>DATABASE_URL</key>
-	<string>https://n-plugin-test.firebaseio.com</string>
+	<string>https://mercury-f8270.firebaseio.com</string>
 </dict>
 </plist>
