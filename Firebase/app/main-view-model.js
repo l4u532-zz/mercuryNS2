@@ -1,3 +1,6 @@
+var dialogsModule = require("ui/dialogs");
+var frameModule = require("ui/frame");
+var viewModule = require("ui/core/view");
 var observable = require("data/observable");
 var dialogs = require("ui/dialogs");
 var firebase = require("nativescript-plugin-firebase");
@@ -6,6 +9,11 @@ var DemoAppModel = (function (_super) {
   function DemoAppModel() {
     _super.call(this);
   }
+
+  DemoAppModel.prototype.goToList = function () {
+    var topmost = frameModule.topmost();
+    topmost.navigate("login2");
+};
 
   DemoAppModel.prototype.doInit = function () {
     var that = this;
