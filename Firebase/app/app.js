@@ -15,6 +15,10 @@ var firebase = require("nativescript-plugin-firebase");
       }
   );
 
-application.mainModule = "views/login/login";
+application.mainModule = "main-page";
 application.cssFile = "./app.css";
 application.start();
+
+// application.mainModule = "views/login/login";
+// application.cssFile = "./app.css";
+// application.start();

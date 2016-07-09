@@ -196,7 +196,7 @@ var DemoAppModel = (function (_super) {
       // note that you need to enable email-password login in your firebase instance
       type: firebase.LoginType.PASSWORD,
       // note that these credentials have been configured in our firebase instance
-      email: 'eddy@x-services.nl',
+      email: 'hello@world.com',
       password: 'firebase'
     }).then(
         function (result) {

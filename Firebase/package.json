@@ -14,7 +14,8 @@
 	},
 	"dependencies": {
 		"nativescript-plugin-firebase": "3.3.0",
-		"tns-core-modules": "2.0.1"
+		"tns-core-modules": "2.0.1",
+		"email-validator": "1.0.4"
 	},
 	"devDependencies": {
 		"babel-traverse": "6.9.0",
