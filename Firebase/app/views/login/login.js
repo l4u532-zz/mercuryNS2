@@ -23,7 +23,7 @@ exports.loaded = function(args) {
 exports.signIn = function() {
     user.login()
         .then(function() {
-            frameModule.topmost().navigate("views/newlist/newlist");
+            frameModule.topmost().navigate("views/list/list");
         }).catch(function(error) {
             dialogsModule.alert({
                 message: error,
