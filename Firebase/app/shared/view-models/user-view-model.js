@@ -28,10 +28,10 @@ function User(info) {
     viewModel.login = function() {
         return firebase.login({
             type: firebase.LoginType.PASSWORD,
-            email: 'hans@wurst.com',
-            password: 'hanswurst'
-            // email: viewModel.get("email"),
-            // password: viewModel.get("password")
+            // email: 'hans@wurst.com',
+            // password: 'hanswurst'
+            email: viewModel.get("email"),
+            password: viewModel.get("password")
           }).then(
             function (response) {
                 config.uid = response.uid
