@@ -32,7 +32,7 @@ exports.signIn = function() {
         });
 };
 
-exports.register = function() {
+exports.navigateAway = function() {
     var topmost = frameModule.topmost();
-    topmost.navigate("views/list/list");
+    topmost.navigate("views/newlist/newlist");
 };

@@ -8,8 +8,8 @@ function User(info) {
 
     // You can add properties to observables on creation
     var viewModel = new observableModule.Observable({
-        email: info.email || "jen.looper@gmail.com",
-        password: info.password || "test"
+        email: info.email || "hans@wurst.com",
+        password: info.password || "hanswurst"
     });
 
     viewModel.init = function(){

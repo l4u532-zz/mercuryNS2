@@ -18,11 +18,11 @@ function GroceryListViewModel(items) {
     viewModel.indexOf = indexOf;
 
     viewModel.load = function () {
-        
+
         var onChildEvent = function(result) {
         var matches = [];
 
-            if (result.type === "ChildAdded") {            
+            if (result.type === "ChildAdded") {
                 if(result.value.UID === config.uid){
                   viewModel.push({
                     name: result.value.Name,
@@ -34,10 +34,10 @@ function GroceryListViewModel(items) {
             else if (result.type === "ChildRemoved") {
 
                 matches.push(result);
-                        
+
                 matches.forEach(function(match) {
                     var index = viewModel.indexOf(match);
-                    viewModel.splice(index, 1);                                     
+                    viewModel.splice(index, 1);
                 });
 
             }
@@ -50,7 +50,7 @@ function GroceryListViewModel(items) {
             function (error) {
               console.log("firebase.addChildEventListener error: " + error);
             }
-        )   
+        )
       };
 
     viewModel.empty = function() {

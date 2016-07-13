@@ -1,4 +1,0 @@
-<!-- main-page.xml-->
-<Page loaded="onPageLoaded">
-  <Label text="Hello, world!"/>
-</Page>
