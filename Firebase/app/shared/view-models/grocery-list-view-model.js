@@ -25,7 +25,8 @@ function GroceryListViewModel(items) {
             if (result.type === "ChildAdded") {
                 if(result.value.UID === config.uid){
                   viewModel.push({
-                    name: result.value.Name,
+                    type: result.value.type,
+                    starts: result.value.starts,
                     id: result.key
                   });
                 }
@@ -57,20 +58,6 @@ function GroceryListViewModel(items) {
         while (viewModel.length) {
             viewModel.pop();
         }
-    };
-
-    viewModel.add = function(grocery) {
-        return firebase.push(
-          '/Groceries',
-          {'Name': grocery,
-           'UID': config.uid
-           }
-        );
-    };
-
-    viewModel.delete = function(index) {
-        var id = viewModel.getItem(index).id;
-        return firebase.remove("/Groceries/"+id+"");
     };
 
     return viewModel;

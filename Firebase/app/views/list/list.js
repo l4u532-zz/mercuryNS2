@@ -7,12 +7,17 @@ var socialShare = require("nativescript-social-share");
 var swipeDelete = require("../../shared/utils/ios-swipe-delete");
 var frameModule = require("ui/frame");
 var page;
+var itemIndex;
 
 var groceryList = new GroceryListViewModel([]);
 var pageData = new observableModule.Observable({
     groceryList: groceryList,
     grocery: ""
 });
+
+// remove later
+var config = require("../../shared/config");
+var firebase = require("nativescript-plugin-firebase");
 
 exports.loaded = function(args) {
     page = args.object;
@@ -79,7 +84,66 @@ exports.delete = function(args) {
     groceryList.delete(index);
 };
 
-exports.navigateAway = function() {
-    var topmost = frameModule.topmost();
-    topmost.navigate("views/newlist/newlist");
+// Navigate to previous page
+exports.backToTopic = function backToTopic(){
+    topmost.goBack();
+}
+
+// Logic of tapping a listview item
+function listViewItemTap(args) {
+    var itemIndex = args.index;
+    console.log(pageData);
+    var trainingID = pageData.groceryList.getItem(itemIndex).id;
+    console.log("Item with itemIndex " + itemIndex + " has the id " + trainingID);
+    //subscribe(itemIndex);
+}
+exports.listViewItemTap = listViewItemTap;
+
+// Update data
+// Subscribe to training
+exports.subscribe = function (itemIndex) {
+    firebase.update(
+        "/signups",
+        {UID: config.uid, trainingID: itemIndex, }
+    );
+}
+
+// Store data - an array of JSON objects
+// JS.Date.toJSON = YYYY-MM-DDTHH:mm:ss.sssZ
+exports.pushDB_1 = function (result) {
+    firebase.setValue(
+        "/Groceries",
+        [
+            {UID: config.uid, id: "0", type: "Gymnastics", starts: "2016-12-24T09:00:00", partic_max: "8", partic_current: "3"},
+            {UID: config.uid, id: "1", type: "Team Workout", starts: "2016-12-24T11:00:00", partic_max: "8", partic_current: "3"},
+            {UID: config.uid, id: "2", type: "Mobility", starts: "2016-12-25T09:00:00", partic_max: "8", partic_current: "3"},
+            {UID: config.uid, id: "3", type: "Strength", starts: "2016-12-25T11:00:00", partic_max: "8", partic_current: "3"},
+            {UID: config.uid, id: "4", type: "Gymnastics", starts: "2016-12-26T09:00:00", partic_max: "8", partic_current: "3"}
+        ]
+    );
+    if (!result.error) {
+        console.log("Event type: " + result.type);
+        console.log("Key: " + result.key);
+        console.log("Value: " + JSON.stringify(result.value));
+    }
+};
+
+// to store an array of JSON objects
+// JS.Date.toJSON = YYYY-MM-DDTHH:mm:ss.sssZ
+exports.pushDB_2 = function (result) {
+    firebase.setValue(
+        "/signups",
+        [
+            {UID: config.uid, id: "0", trainingID: "0"},
+            {UID: config.uid, id: "1", trainingID: "1"},
+            {UID: config.uid, id: "2", trainingID: "2"},
+            {UID: config.uid, id: "3", trainingID: "3"},
+            {UID: config.uid, id: "4", trainingID: "4"}
+        ]
+    );
+    if (!result.error) {
+        console.log("Event type: " + result.type);
+        console.log("Key: " + result.key);
+        console.log("Value: " + JSON.stringify(result.value));
+    }
 };

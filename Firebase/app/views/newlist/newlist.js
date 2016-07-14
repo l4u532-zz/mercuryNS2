@@ -69,7 +69,7 @@ exports.loaded = function(args) {
 // JS.Date.toJSON = YYYY-MM-DDTHH:mm:ss.sssZ
 exports.pushDB = function (result) {
     firebase.setValue(
-        "/trainings",
+        "/Groceries",
         [
             {id: "0", type: "Gymnastics", starts: "2016-12-24T09:00:00", partic_max: "8", partic_current: "3"},
             {id: "1", type: "Team Workout", starts: "2016-12-24T11:00:00", partic_max: "8", partic_current: "3"},
