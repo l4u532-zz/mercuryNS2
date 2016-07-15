@@ -92,9 +92,12 @@ exports.backToTopic = function backToTopic(){
 // Logic of tapping a listview item
 function listViewItemTap(args) {
     var itemIndex = args.index;
-    console.log(pageData);
-    var trainingID = pageData.groceryList.getItem(itemIndex).id;
-    console.log("Item with itemIndex " + itemIndex + " has the id " + trainingID);
+    var trainingID = pageData.groceryList.getItem(itemIndex).type;
+    var currentID = pageData.groceryList.getItem(itemIndex).id;
+    console.log(
+        "Item with itemIndex " + itemIndex +
+        " has the type " + trainingID +
+        " has the id " + currentID);
     //subscribe(itemIndex);
 }
 exports.listViewItemTap = listViewItemTap;

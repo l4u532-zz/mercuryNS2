@@ -22,9 +22,11 @@ function GroceryListViewModel(items) {
         var onChildEvent = function(result) {
         var matches = [];
 
+            // variables available in the grocerList array
             if (result.type === "ChildAdded") {
                 if(result.value.UID === config.uid){
                   viewModel.push({
+                      // add new variables here
                     type: result.value.type,
                     starts: result.value.starts,
                     id: result.key

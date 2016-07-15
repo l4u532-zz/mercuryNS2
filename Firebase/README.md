@@ -1,6 +1,11 @@
-# nativescript-plugin-firebase demo app
+# CBS 4 Weeks Project: Multi-Platform Booking Application
 
-Demo app for the {N} [Firebase plugin](https://www.npmjs.com/package/nativescript-plugin-firebase)
+## Technology
+* Built on Telerik's NativeScript
+* Using the {N} [Firebase plugin](https://www.npmjs.com/package/nativescript-plugin-firebase)
+* Using Firebase
+
+# Old Description
 
 If you want to see this app in action first, check this 41 second demo:
 [![YouTube demo, 41 sec](screenshots/yt-thumb.png)](https://youtu.be/7zYU5e0Djkw "YouTube demo, 41 sec")
