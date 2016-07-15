@@ -93,31 +93,75 @@ exports.backToTopic = function backToTopic(){
 function listViewItemTap(args) {
     var itemIndex = args.index;
     var currentID = pageData.groceryList.getItem(itemIndex).id;
-    firebase.push(
-        "/signups",
-            {UID: config.uid, trainingID: currentID}
-    ).then(
-        function (result) {
-            console.log("Booked training #" + currentID);
-        }
-    );
-    //exports.subscribe(currentID);
+
+    exports.subscribe(currentID);
+    exports.bookingStatus_long(currentID);
+    //exports.bookingStatus_short();
+
 }
 exports.listViewItemTap = listViewItemTap;
 
 // Subscribing to a training
 exports.subscribe = function (currentID) {
 
-    firebase.setValue(
+    firebase.push(
         "/signups",
-        {UID: config.uid, trainingID: currentID})
-        .catch(function() {
-            dialogsModule.alert({
-                message: "An error occurred while signing up.",
-                okButtonText: "OK"
-            });
-        });
+        {UID: config.uid, trainingID: currentID}
+    );
+
 };
+
+// Query if training exists
+exports.bookingStatus_long = function(currentID) {
+    var onQueryEvent = function(result) {
+        // note that the query returns 1 match at a time
+        // in the order specified in the query
+        if (!result.error) {
+            console.log("Event type: " + result.type);
+            console.log("Key: " + result.key);
+            console.log("Value: " + JSON.stringify(result.value));
+        }
+    };
+
+    firebase.query(
+        onQueryEvent,
+        "/signups",
+        {
+            // set this to true if you want to check if the value exists or just want the event to fire once
+            // default false, so it listens continuously
+            singleEvent: true,
+            // order by company.country
+            orderBy: {
+                type: firebase.QueryOrderByType.CHILD,
+                value: 'trainingID' // mandatory when type is 'child'
+            },
+            // but only companies named 'Telerik'
+            // (this range relates to the orderBy clause)
+            range: {
+                type: firebase.QueryRangeType.EQUAL_TO,
+                value: currentID
+            },
+            // second time
+            orderBy: {
+                type: firebase.QueryOrderByType.CHILD,
+                value: 'UID' // mandatory when type is 'child'
+            },
+            range: {
+                type: firebase.QueryRangeType.EQUAL_TO,
+                value: config.uid
+            }
+        }
+    );
+};
+
+// Query if training exists
+exports.bookingStatus_short = function() {
+    firebase.database().ref("signups").orderByChild("UID").equalTo(config.uid).on("child_added", function (snapshot) {
+        console.log(snapshot.key);
+        console.log("bookingStatus() was run");
+    })
+};
+
 
 // Store data - an array of JSON objects
 // JS.Date.toJSON = YYYY-MM-DDTHH:mm:ss.sssZ

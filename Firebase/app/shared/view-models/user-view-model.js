@@ -13,9 +13,7 @@ function User(info) {
     });
 
     viewModel.init = function(){
-        firebase.init({
-            url: config.apiUrl
-          }).then(
+        firebase.init(config).then(
               function (instance) {
                 console.log("firebase.init done");
               },
