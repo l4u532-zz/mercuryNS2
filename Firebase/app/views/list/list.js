@@ -89,27 +89,35 @@ exports.backToTopic = function backToTopic(){
     topmost.goBack();
 }
 
-// Logic of tapping a listview item
+// Tapping a listview item
 function listViewItemTap(args) {
     var itemIndex = args.index;
-    var trainingID = pageData.groceryList.getItem(itemIndex).type;
     var currentID = pageData.groceryList.getItem(itemIndex).id;
-    console.log(
-        "Item with itemIndex " + itemIndex +
-        " has the type " + trainingID +
-        " has the id " + currentID);
-    //subscribe(itemIndex);
+    firebase.push(
+        "/signups",
+            {UID: config.uid, trainingID: currentID}
+    ).then(
+        function (result) {
+            console.log("Booked training #" + currentID);
+        }
+    );
+    //exports.subscribe(currentID);
 }
 exports.listViewItemTap = listViewItemTap;
 
-// Update data
-// Subscribe to training
-exports.subscribe = function (itemIndex) {
-    firebase.update(
+// Subscribing to a training
+exports.subscribe = function (currentID) {
+
+    firebase.setValue(
         "/signups",
-        {UID: config.uid, trainingID: itemIndex, }
-    );
-}
+        {UID: config.uid, trainingID: currentID})
+        .catch(function() {
+            dialogsModule.alert({
+                message: "An error occurred while signing up.",
+                okButtonText: "OK"
+            });
+        });
+};
 
 // Store data - an array of JSON objects
 // JS.Date.toJSON = YYYY-MM-DDTHH:mm:ss.sssZ

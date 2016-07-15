@@ -22,14 +22,16 @@ function GroceryListViewModel(items) {
         var onChildEvent = function(result) {
         var matches = [];
 
-            // variables available in the grocerList array
+            // variables available in the groceryList array
             if (result.type === "ChildAdded") {
                 if(result.value.UID === config.uid){
                   viewModel.push({
                       // add new variables here
-                    type: result.value.type,
-                    starts: result.value.starts,
-                    id: result.key
+                      id: result.key,
+                      type: result.value.type,
+                      starts: result.value.starts,
+                      partic_current: result.value.partic_current,
+                      partic_max: result.value.partic_max
                   });
                 }
             }

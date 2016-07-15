@@ -9,6 +9,7 @@
                 <StackLayout columns="*, auto">
                     <Label text="{{ type }}" />
                     <Label text="{{ starts }}" />
+                    <Label text="{{ partic_current }}" />
                     <Image src="res://ic_menu_delete" ios:visibility="collapsed" col="1" tap="delete" />
                 </StackLayout>
             </ListView.itemTemplate>
