@@ -117,10 +117,21 @@ exports.bookingStatus_long = function(currentID) {
         // note that the query returns 1 match at a time
         // in the order specified in the query
         if (!result.error) {
-            console.log("Event type: " + result.type);
-            console.log("Key: " + result.key);
-            console.log("Value: " + JSON.stringify(result.value));
+            //console.log("Event type: " + result.type);
+            //console.log("Key: " + result.key);
+            //console.log("Value: " + JSON.stringify(result.value));
         }
+
+        var data = JSON.parse(JSON.stringify(result.value));
+
+        for (var prop in data) {
+            if (data[prop].trainingID === currentID && data[prop].UID === config.uid) {
+                console.log("Already signed up!")
+            } else {
+                console.log("Nothing found.")
+            }
+        }
+
     };
 
     firebase.query(
@@ -133,23 +144,14 @@ exports.bookingStatus_long = function(currentID) {
             // order by company.country
             orderBy: {
                 type: firebase.QueryOrderByType.CHILD,
-                value: 'trainingID' // mandatory when type is 'child'
+                value: 'UID' // mandatory when type is 'child'
             },
             // but only companies named 'Telerik'
             // (this range relates to the orderBy clause)
             range: {
                 type: firebase.QueryRangeType.EQUAL_TO,
-                value: currentID
-            },
-            // second time
-            orderBy: {
-                type: firebase.QueryOrderByType.CHILD,
-                value: 'UID' // mandatory when type is 'child'
-            },
-            range: {
-                type: firebase.QueryRangeType.EQUAL_TO,
                 value: config.uid
-            }
+            },
         }
     );
 };
