@@ -94,25 +94,14 @@ function listViewItemTap(args) {
     var itemIndex = args.index;
     var currentID = pageData.groceryList.getItem(itemIndex).id;
 
-    exports.subscribe(currentID);
-    exports.bookingStatus_long(currentID);
-    //exports.bookingStatus_short();
+    exports.tapBookingLogic(currentID);
 
 }
 exports.listViewItemTap = listViewItemTap;
 
-// Subscribing to a training
-exports.subscribe = function (currentID) {
-
-    firebase.push(
-        "/signups",
-        {UID: config.uid, trainingID: currentID}
-    );
-
-};
 
 // Query if training exists
-exports.bookingStatus_long = function(currentID) {
+exports.tapBookingLogic = function (currentID) {
     var onQueryEvent = function(result) {
         // note that the query returns 1 match at a time
         // in the order specified in the query
@@ -126,9 +115,10 @@ exports.bookingStatus_long = function(currentID) {
 
         for (var prop in data) {
             if (data[prop].trainingID === currentID && data[prop].UID === config.uid) {
-                console.log("Already signed up!")
+                console.log("Already signed up.");
             } else {
-                console.log("Nothing found.")
+                exports.subscribe(currentID);
+                console.log("Successfully subscribed to the training.");
             }
         }
 
@@ -156,12 +146,14 @@ exports.bookingStatus_long = function(currentID) {
     );
 };
 
-// Query if training exists
-exports.bookingStatus_short = function() {
-    firebase.database().ref("signups").orderByChild("UID").equalTo(config.uid).on("child_added", function (snapshot) {
-        console.log(snapshot.key);
-        console.log("bookingStatus() was run");
-    })
+// Subscribing to a training
+exports.subscribe = function (currentID) {
+
+    firebase.push(
+        "/signups",
+        {UID: config.uid, trainingID: currentID}
+    );
+
 };
 
 
