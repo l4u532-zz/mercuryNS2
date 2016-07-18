@@ -2,12 +2,9 @@
     <Page.actionBar>
         <ActionBar title="Book your training"></ActionBar>
     </Page.actionBar>
-    <TabView>
-    <TabView.items>
-    <TabViewItem title="Trainings" id="tabView1">
-    <TabViewItem.view>
-    <GridLayout rows="auto, *" columns="2*, *">
-        <Label text="Available Trainings" />
+    <GridLayout rows="auto, *" columns="auto, *">
+        <Button col="0" text="Trainingz" cssClass="link" tap="navToTrainings" />
+        <Button col="1" text="Signups" cssClass="link" tap="navToSignups" />
         <ListView items="{{ groceryList }}" id="groceryList" row="2" colSpan="2" itemTap="listViewItemTap">
             <ListView.itemTemplate>
                 <StackLayout columns="*, auto">
@@ -19,25 +16,4 @@
         </ListView>
         <ActivityIndicator busy="{{ isLoading }}" rowSpan="2" colSpan="2" />
     </GridLayout>
-    </TabViewItem.view>
-    </TabViewItem>
-        <TabViewItem title="Signups" id="tabView2" tap="tap_tabView2">
-            <TabViewItem.view>
-                <GridLayout rows="auto, *" columns="2*, *">
-                    <Label text="Your Signups" />
-                    <Button text="consoleLog" tap="consoleLog" row="0" col="1" />
-                    <ListView items="{{ signupList }}" id="signupList" row="2" colSpan="2" itemTap="listViewItemTap">
-                        <ListView.itemTemplate>
-                            <StackLayout columns="*, auto">
-                                <Label text="{{ su_id }}" />
-                                <Label text="{{ su_trainingID }}" />
-                            </StackLayout>
-                        </ListView.itemTemplate>
-                    </ListView>
-                    <ActivityIndicator busy="{{ isLoading }}" rowSpan="2" colSpan="2" />
-                </GridLayout>
-            </TabViewItem.view>
-        </TabViewItem>
-    </TabView.items>
-    </TabView>
 </Page>

@@ -1,18 +1,17 @@
-var segmentedBarModule = require("ui/segmented-bar");
 var dialogsModule = require("ui/dialogs");
 var observableModule = require("data/observable");
 var observableArrayModule = require("data/observable-array");
 var viewModule = require("ui/core/view");
-var GroceryListViewModel = require("../../shared/view-models/grocery-list-view-model");
+var SignupListViewModel = require("../../shared/view-models/signup-list-view-model");
 var socialShare = require("nativescript-social-share");
 var swipeDelete = require("../../shared/utils/ios-swipe-delete");
 var frameModule = require("ui/frame");
 var page;
 var itemIndex;
 
-var groceryList = new GroceryListViewModel([]);
-var pageData = new observableModule.Observable({
-    groceryList: groceryList
+var signupList = new SignupListViewModel([]);
+var signupData = new observableModule.Observable({
+    signupList: signupList
 });
 
 // remove later
@@ -23,9 +22,9 @@ exports.loaded = function(args) {
     page = args.object;
 
     if (page.ios) {
-        var listView = viewModule.getViewById(page, "groceryList");
+        var listView = viewModule.getViewById(page, "signupList");
         swipeDelete.enable(listView, function(index) {
-            groceryList.delete(index);
+            signupList.delete(index);
         });
         var navigationBar = frameModule.topmost().ios.controller.navigationBar;
         navigationBar.barTintColor = UIColor.colorWithRedGreenBlueAlpha(0.011, 0.278, 0.576, 1);
@@ -37,21 +36,27 @@ exports.loaded = function(args) {
 
     }
     
-    page.bindingContext = pageData;
+    page.bindingContext = signupData;
 
-    groceryList.empty();
-    pageData.set("isLoading", true);
-    groceryList.load().then(function() {
-        pageData.set("isLoading", false);
+    signupList.empty();
+    signupData.set("isLoading", true);
+    signupList.load().then(function() {
+        signupData.set("isLoading", false);
+    });
+
+    signupList.empty();
+    signupData.set("isLoading", true);
+    signupList.load().then(function() {
+        signupData.set("isLoading", false);
     });
 };
 
 exports.add = function() {
     // Check for empty submissions
-    if (pageData.get("grocery").trim() !== "") {
+    if (signupData.get("grocery").trim() !== "") {
         // Dismiss the keyboard
         viewModule.getViewById(page, "grocery").dismissSoftInput();
-        groceryList.add(pageData.get("grocery"))
+        signupList.add(signupData.get("grocery"))
             .catch(function() {
                 dialogsModule.alert({
                     message: "An error occurred while adding an item to your list.",
@@ -59,7 +64,7 @@ exports.add = function() {
                 });
             });
         // Empty the input field
-        pageData.set("grocery", "");
+        signupData.set("grocery", "");
     } else {
         dialogsModule.alert({
             message: "Enter a grocery item",
@@ -71,8 +76,8 @@ exports.add = function() {
 exports.share = function() {
     var list = [];
     var finalList = "";
-    for (var i = 0, size = groceryList.length; i < size ; i++) {
-        list.push(groceryList.getItem(i).name);
+    for (var i = 0, size = signupList.length; i < size ; i++) {
+        list.push(signupList.getItem(i).name);
     }
     var listString = list.join(", ").trim();
     socialShare.shareText(listString);
@@ -80,8 +85,8 @@ exports.share = function() {
 
 exports.delete = function(args) {
     var item = args.view.bindingContext;
-    var index = groceryList.indexOf(item);
-    groceryList.delete(index);
+    var index = signupList.indexOf(item);
+    signupList.delete(index);
 };
 
 // Navigate to previous page
@@ -92,7 +97,7 @@ exports.backToTopic = function backToTopic(){
 // Tapping a listview item
 function listViewItemTap(args) {
     var itemIndex = args.index;
-    var currentID = pageData.groceryList.getItem(itemIndex).id;
+    var currentID = signupData.signupList.getItem(itemIndex).id;
 
     exports.tapBookingLogic(currentID);
 
@@ -197,7 +202,11 @@ exports.pushDB_2 = function (result) {
     }
 };
 
-exports.navToSignups = function () {
-    console.log("Pressed button");
-    frameModule.topmost().navigate("views/signup_list/signup_list");
+exports.consoleLog = function() {
+    page.bindingContext = signupData;
+    console.log("Test");
+    console.log("SignupList:" + signupList);
+    console.log("signupList:" + signupList);
+    console.log("signupData:" + signupData);
+    console.log("signupData:" + signupData);
 }

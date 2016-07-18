@@ -1,0 +1,18 @@
+<Page loaded="loaded">
+    <Page.actionBar>
+        <ActionBar title="Book your training"></ActionBar>
+    </Page.actionBar>
+                <GridLayout rows="auto, *" columns="2*, *">
+                    <Label text="Your Signups" />
+                    <Button text="consoleLog" tap="consoleLog" row="0" col="1" />
+                    <ListView items="{{ signupList }}" id="signupList" row="2" colSpan="2" itemTap="listViewItemTap">
+                        <ListView.itemTemplate>
+                            <StackLayout columns="*, auto">
+                                <Label text="{{ su_id }}" />
+                                <Label text="{{ su_trainingID }}" />
+                            </StackLayout>
+                        </ListView.itemTemplate>
+                    </ListView>
+                    <ActivityIndicator busy="{{ isLoading }}" rowSpan="2" colSpan="2" />
+                </GridLayout>
+</Page>
