@@ -3,6 +3,7 @@ var observableModule = require("data/observable");
 var observableArrayModule = require("data/observable-array");
 var viewModule = require("ui/core/view");
 var GroceryListViewModel = require("../../shared/view-models/grocery-list-view-model");
+var SignupListViewModel = require("../../shared/view-models/signup-list-view-model");
 var socialShare = require("nativescript-social-share");
 var swipeDelete = require("../../shared/utils/ios-swipe-delete");
 var frameModule = require("ui/frame");
@@ -11,8 +12,12 @@ var itemIndex;
 
 var groceryList = new GroceryListViewModel([]);
 var pageData = new observableModule.Observable({
-    groceryList: groceryList,
-    grocery: ""
+    groceryList: groceryList
+});
+
+var signupList = new SignupListViewModel([]);
+var signupData = new observableModule.Observable({
+    signupList: signupList
 });
 
 // remove later
@@ -43,6 +48,12 @@ exports.loaded = function(args) {
     pageData.set("isLoading", true);
     groceryList.load().then(function() {
         pageData.set("isLoading", false);
+    });
+
+    signupList.empty();
+    signupData.set("isLoading", true);
+    signupList.load().then(function() {
+        signupData.set("isLoading", false);
     });
 };
 
@@ -196,3 +207,16 @@ exports.pushDB_2 = function (result) {
         console.log("Value: " + JSON.stringify(result.value));
     }
 };
+
+exports.tap_tabView2 = function () {
+    page.bindingContext = signupData;
+}
+
+exports.consoleLog = function() {
+    page.bindingContext = signupData;
+    console.log("Test");
+    console.log("SignupList:" + signupList);
+    console.log("GroceryList:" + groceryList);
+    console.log("pageData:" + pageData);
+    console.log("signupData:" + signupData);
+}

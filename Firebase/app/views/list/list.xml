@@ -4,17 +4,16 @@
     </Page.actionBar>
     <TabView>
     <TabView.items>
-    <TabViewItem title="Trainings">
+    <TabViewItem title="Trainings" id="tabView1">
     <TabViewItem.view>
     <GridLayout rows="auto, *" columns="2*, *">
-        <Button text="pop DB2" tap="pushDB_2" row="0" col="1" />
+        <Label text="Available Trainings" />
         <ListView items="{{ groceryList }}" id="groceryList" row="2" colSpan="2" itemTap="listViewItemTap">
             <ListView.itemTemplate>
                 <StackLayout columns="*, auto">
                     <Label text="{{ type }}" />
                     <Label text="{{ starts }}" />
                     <Label text="{{ partic_current }}" />
-                    <Image src="res://ic_menu_delete" ios:visibility="collapsed" col="1" tap="delete" />
                 </StackLayout>
             </ListView.itemTemplate>
         </ListView>
@@ -22,9 +21,21 @@
     </GridLayout>
     </TabViewItem.view>
     </TabViewItem>
-        <TabViewItem title="Signups">
+        <TabViewItem title="Signups" id="tabView2" tap="tap_tabView2">
             <TabViewItem.view>
-                <Label text="Label in Tab2" />
+                <GridLayout rows="auto, *" columns="2*, *">
+                    <Label text="Your Signups" />
+                    <Button text="consoleLog" tap="consoleLog" row="0" col="1" />
+                    <ListView items="{{ signupList }}" id="signupList" row="2" colSpan="2" itemTap="listViewItemTap">
+                        <ListView.itemTemplate>
+                            <StackLayout columns="*, auto">
+                                <Label text="{{ su_id }}" />
+                                <Label text="{{ su_trainingID }}" />
+                            </StackLayout>
+                        </ListView.itemTemplate>
+                    </ListView>
+                    <ActivityIndicator busy="{{ isLoading }}" rowSpan="2" colSpan="2" />
+                </GridLayout>
             </TabViewItem.view>
         </TabViewItem>
     </TabView.items>
