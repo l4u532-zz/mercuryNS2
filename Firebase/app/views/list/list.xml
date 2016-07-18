@@ -2,6 +2,10 @@
     <Page.actionBar>
         <ActionBar title="Book your training"></ActionBar>
     </Page.actionBar>
+    <TabView>
+    <TabView.items>
+    <TabViewItem title="Trainings">
+    <TabViewItem.view>
     <GridLayout rows="auto, *" columns="2*, *">
         <Button text="pop DB2" tap="pushDB_2" row="0" col="1" />
         <ListView items="{{ groceryList }}" id="groceryList" row="2" colSpan="2" itemTap="listViewItemTap">
@@ -16,4 +20,13 @@
         </ListView>
         <ActivityIndicator busy="{{ isLoading }}" rowSpan="2" colSpan="2" />
     </GridLayout>
+    </TabViewItem.view>
+    </TabViewItem>
+        <TabViewItem title="Signups">
+            <TabViewItem.view>
+                <Label text="Label in Tab2" />
+            </TabViewItem.view>
+        </TabViewItem>
+    </TabView.items>
+    </TabView>
 </Page>
