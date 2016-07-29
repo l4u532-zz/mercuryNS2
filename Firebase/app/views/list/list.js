@@ -93,9 +93,10 @@ exports.backToTopic = function backToTopic(){
 function listViewItemTap(args) {
     var itemIndex = args.index; // get index of tapped item
     var currentID = pageData.groceryList.getItem(itemIndex).id; // get trainingID of tapped item
-    var su_type = pageData.groceryList.getItem(itemIndex).type; // get trainingID of tapped item
+    var su_type = pageData.groceryList.getItem(itemIndex).type; // get type of tapped item
+    var su_starts = pageData.groceryList.getItem(itemIndex).starts; // get time of tapped item
 
-    exports.subscribe(currentID, su_type);
+    exports.subscribe(currentID, su_type, su_starts);
 
 }
 exports.listViewItemTap = listViewItemTap;
@@ -148,11 +149,11 @@ exports.tapBookingLogic = function (currentID) {
 };
 
 // Subscribing to a training
-exports.subscribe = function (currentID, su_type) {
+exports.subscribe = function (currentID, su_type, su_starts) {
 
     firebase.push(
         "/signups",
-        {UID: config.uid, trainingID: currentID, su_type: su_type}
+        {UID: config.uid, trainingID: currentID, su_type: su_type, su_starts: su_starts}
     );
 
 };

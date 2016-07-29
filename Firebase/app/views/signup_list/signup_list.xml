@@ -10,9 +10,8 @@
                     <ListView items="{{ signupList }}" id="signupList" row="2" colSpan="2" itemTap="listViewItemTap">
                         <ListView.itemTemplate>
                             <StackLayout columns="*, auto">
-                                <Label text="{{ su_id }}" />
-                                <Label text="{{ su_trainingID }}" />
                                 <Label text="{{ su_type }}" />
+                                <Label text="{{ su_starts }}" />
                             </StackLayout>
                         </ListView.itemTemplate>
                     </ListView>

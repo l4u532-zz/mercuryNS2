@@ -26,10 +26,10 @@ function SignupListViewModel(items) {
             if (result.type === "ChildAdded") {
                 if(result.value.UID === config.uid){
                   viewModel.push({
-                      // add new variables here
-                      su_id: result.key,
-                      su_trainingID: result.value.trainingID,
-                      su_type: result.value.su_type
+                      su_id: result.key, // not visible, only required for debugging
+                      su_trainingID: result.value.trainingID, // not visible, only required for debugging
+                      su_type: result.value.su_type,
+                      su_starts: result.value.su_starts
                   });
                 }
             }
