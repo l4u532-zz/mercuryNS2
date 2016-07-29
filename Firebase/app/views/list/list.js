@@ -94,7 +94,7 @@ function listViewItemTap(args) {
     var itemIndex = args.index; // get index of tapped item
     var currentID = pageData.groceryList.getItem(itemIndex).id; // get trainingID of tapped item
 
-    exports.tapBookingLogic(currentID);
+    exports.subscribe(currentID);
 
 }
 exports.listViewItemTap = listViewItemTap;
@@ -154,47 +154,6 @@ exports.subscribe = function (currentID) {
         {UID: config.uid, trainingID: currentID}
     );
 
-};
-
-
-// Store data - an array of JSON objects
-// JS.Date.toJSON = YYYY-MM-DDTHH:mm:ss.sssZ
-exports.pushDB_1 = function (result) {
-    firebase.setValue(
-        "/Groceries",
-        [
-            {UID: config.uid, id: "0", type: "Gymnastics", starts: "2016-12-24T09:00:00", partic_max: "8", partic_current: "3"},
-            {UID: config.uid, id: "1", type: "Team Workout", starts: "2016-12-24T11:00:00", partic_max: "8", partic_current: "3"},
-            {UID: config.uid, id: "2", type: "Mobility", starts: "2016-12-25T09:00:00", partic_max: "8", partic_current: "3"},
-            {UID: config.uid, id: "3", type: "Strength", starts: "2016-12-25T11:00:00", partic_max: "8", partic_current: "3"},
-            {UID: config.uid, id: "4", type: "Gymnastics", starts: "2016-12-26T09:00:00", partic_max: "8", partic_current: "3"}
-        ]
-    );
-    if (!result.error) {
-        console.log("Event type: " + result.type);
-        console.log("Key: " + result.key);
-        console.log("Value: " + JSON.stringify(result.value));
-    }
-};
-
-// to store an array of JSON objects
-// JS.Date.toJSON = YYYY-MM-DDTHH:mm:ss.sssZ
-exports.pushDB_2 = function (result) {
-    firebase.setValue(
-        "/signups",
-        [
-            {UID: config.uid, id: "0", trainingID: "0"},
-            {UID: config.uid, id: "1", trainingID: "1"},
-            {UID: config.uid, id: "2", trainingID: "2"},
-            {UID: config.uid, id: "3", trainingID: "3"},
-            {UID: config.uid, id: "4", trainingID: "4"}
-        ]
-    );
-    if (!result.error) {
-        console.log("Event type: " + result.type);
-        console.log("Key: " + result.key);
-        console.log("Value: " + JSON.stringify(result.value));
-    }
 };
 
 exports.navToSignups = function () {

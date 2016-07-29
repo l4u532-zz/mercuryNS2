@@ -5,7 +5,7 @@
         </ActionBar>
     </Page.actionBar>
     <GridLayout rows="auto, *" columns="auto, *">
-        <Button col="0" text="Trainingz" cssClass="link" tap="navToTrainings" />
+        <Button col="0" text="PushDB" cssClass="link" tap="navToTrainings" />
         <Button col="1" text="Signups" cssClass="link" tap="navToSignups" />
         <ListView items="{{ groceryList }}" id="groceryList" row="2" colSpan="2" itemTap="listViewItemTap">
             <ListView.itemTemplate>
