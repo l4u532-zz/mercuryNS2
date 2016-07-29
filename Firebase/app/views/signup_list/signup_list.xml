@@ -12,6 +12,7 @@
                             <StackLayout columns="*, auto">
                                 <Label text="{{ su_id }}" />
                                 <Label text="{{ su_trainingID }}" />
+                                <Label text="{{ su_type }}" />
                             </StackLayout>
                         </ListView.itemTemplate>
                     </ListView>

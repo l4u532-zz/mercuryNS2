@@ -29,6 +29,7 @@ function SignupListViewModel(items) {
                       // add new variables here
                       su_id: result.key,
                       su_trainingID: result.value.trainingID,
+                      su_type: result.value.su_type
                   });
                 }
             }
