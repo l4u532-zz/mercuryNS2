@@ -1,6 +1,8 @@
 <Page loaded="loaded">
     <Page.actionBar>
-        <ActionBar title="Book your training"></ActionBar>
+        <ActionBar title="Signups">
+        <NavigationButton text="Go Back" android.systemIcon="ic_menu_back" tap="onNavBtnTap"/>
+        </ActionBar>
     </Page.actionBar>
                 <GridLayout rows="auto, *" columns="2*, *">
                     <Label text="Your Signups" />

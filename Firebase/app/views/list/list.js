@@ -33,7 +33,7 @@ exports.loaded = function(args) {
         navigationBar.barStyle = 1;
         navigationBar.tintColor = UIColor.whiteColor();
 
-        frameModule.topmost().ios.navBarVisibility = "never";
+        frameModule.topmost().ios.navBarVisibility = "always";
 
     }
     
@@ -91,8 +91,8 @@ exports.backToTopic = function backToTopic(){
 
 // Tapping a listview item
 function listViewItemTap(args) {
-    var itemIndex = args.index;
-    var currentID = pageData.groceryList.getItem(itemIndex).id;
+    var itemIndex = args.index; // get index of tapped item
+    var currentID = pageData.groceryList.getItem(itemIndex).id; // get trainingID of tapped item
 
     exports.tapBookingLogic(currentID);
 

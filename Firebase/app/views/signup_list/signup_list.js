@@ -8,6 +8,7 @@ var swipeDelete = require("../../shared/utils/ios-swipe-delete");
 var frameModule = require("ui/frame");
 var page;
 var itemIndex;
+var actionBarModule = require("ui/action-bar");
 
 var signupList = new SignupListViewModel([]);
 var signupData = new observableModule.Observable({
@@ -32,7 +33,7 @@ exports.loaded = function(args) {
         navigationBar.barStyle = 1;
         navigationBar.tintColor = UIColor.whiteColor();
 
-        frameModule.topmost().ios.navBarVisibility = "never";
+        frameModule.topmost().ios.navBarVisibility = "always";
 
     }
     
@@ -96,8 +97,8 @@ exports.backToTopic = function backToTopic(){
 
 // Tapping a listview item
 function listViewItemTap(args) {
-    var itemIndex = args.index;
-    var currentID = signupData.signupList.getItem(itemIndex).id;
+    var itemIndex = args.index; // get index of tapped item
+    var currentID = signupData.signupList.getItem(itemIndex).id; // get trainingID of tapped item
 
     exports.tapBookingLogic(currentID);
 
