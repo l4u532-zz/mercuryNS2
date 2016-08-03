@@ -1,9 +1,9 @@
 var dialogsModule = require("ui/dialogs");
 var observableModule = require("data/observable");
-var GroceryListViewModel = require("../../shared/view-models/grocery-list-view-model");
+var TrainingListViewModel = require("../../shared/view-models/training-list-view-model");
 var frameModule = require("ui/frame");
 var page;
-var groceryList = new GroceryListViewModel([]);
+var groceryList = new TrainingListViewModel([]);
 var pageData = new observableModule.Observable({
     groceryList: groceryList
 });
