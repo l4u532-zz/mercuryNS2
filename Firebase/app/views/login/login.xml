@@ -10,7 +10,5 @@
         <TextField secure="true" text="{{ password }}" hint="Password" />
 
         <Button text="Sign in" tap="signIn" />
-        <Button text="Go to /newlist/newlist" cssClass="link" tap="navigateAway" />
-
     </StackLayout>
 </Page>

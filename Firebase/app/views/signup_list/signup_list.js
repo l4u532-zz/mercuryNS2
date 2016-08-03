@@ -1,14 +1,9 @@
 var dialogsModule = require("ui/dialogs");
 var observableModule = require("data/observable");
-var observableArrayModule = require("data/observable-array");
 var viewModule = require("ui/core/view");
 var SignupListViewModel = require("../../shared/view-models/signup-list-view-model");
-var socialShare = require("nativescript-social-share");
-var swipeDelete = require("../../shared/utils/ios-swipe-delete");
 var frameModule = require("ui/frame");
 var page;
-var itemIndex;
-var actionBarModule = require("ui/action-bar");
 
 var signupList = new SignupListViewModel([]);
 var signupData = new observableModule.Observable({
@@ -22,21 +17,6 @@ var firebase = require("nativescript-plugin-firebase");
 exports.loaded = function(args) {
     page = args.object;
 
-    if (page.ios) {
-        var listView = viewModule.getViewById(page, "signupList");
-        swipeDelete.enable(listView, function(index) {
-            signupList.delete(index);
-        });
-        var navigationBar = frameModule.topmost().ios.controller.navigationBar;
-        navigationBar.barTintColor = UIColor.colorWithRedGreenBlueAlpha(0.011, 0.278, 0.576, 1);
-        navigationBar.titleTextAttributes = new NSDictionary([UIColor.whiteColor()], [NSForegroundColorAttributeName]);
-        navigationBar.barStyle = 1;
-        navigationBar.tintColor = UIColor.whiteColor();
-
-        frameModule.topmost().ios.navBarVisibility = "always";
-
-    }
-    
     page.bindingContext = signupData;
 
     signupList.empty();
@@ -50,44 +30,6 @@ exports.loaded = function(args) {
     signupList.load().then(function() {
         signupData.set("isLoading", false);
     });
-};
-
-exports.add = function() {
-    // Check for empty submissions
-    if (signupData.get("grocery").trim() !== "") {
-        // Dismiss the keyboard
-        viewModule.getViewById(page, "grocery").dismissSoftInput();
-        signupList.add(signupData.get("grocery"))
-            .catch(function() {
-                dialogsModule.alert({
-                    message: "An error occurred while adding an item to your list.",
-                    okButtonText: "OK"
-                });
-            });
-        // Empty the input field
-        signupData.set("grocery", "");
-    } else {
-        dialogsModule.alert({
-            message: "Enter a grocery item",
-            okButtonText: "OK"
-        });
-    }
-};
-
-exports.share = function() {
-    var list = [];
-    var finalList = "";
-    for (var i = 0, size = signupList.length; i < size ; i++) {
-        list.push(signupList.getItem(i).name);
-    }
-    var listString = list.join(", ").trim();
-    socialShare.shareText(listString);
-};
-
-exports.delete = function(args) {
-    var item = args.view.bindingContext;
-    var index = signupList.indexOf(item);
-    signupList.delete(index);
 };
 
 // Navigate to previous page
@@ -100,114 +42,26 @@ function listViewItemTap(args) {
     var itemIndex = args.index; // get index of tapped item
     var currentID = signupData.signupList.getItem(itemIndex).id; // get trainingID of tapped item
 
-    exports.tapBookingLogic(currentID);
+    exports.unsubscribe(currentID);
 
 }
 exports.listViewItemTap = listViewItemTap;
 
+exports.unsubscribe = function (currentID) {
 
-// Query if training exists
-exports.tapBookingLogic = function (currentID) {
-    var onQueryEvent = function(result) {
-        // note that the query returns 1 match at a time
-        // in the order specified in the query
-        if (!result.error) {
-            //console.log("Event type: " + result.type);
-            //console.log("Key: " + result.key);
-            //console.log("Value: " + JSON.stringify(result.value));
-        }
-
-        var data = JSON.parse(JSON.stringify(result.value));
-
-        for (var prop in data) {
-            if (data[prop].trainingID === currentID && data[prop].UID === config.uid) {
-                console.log("Already signed up.");
-            } else {
-                exports.subscribe(currentID);
-                console.log("Successfully subscribed to the training.");
-            }
-        }
-
-    };
-
-    firebase.query(
-        onQueryEvent,
-        "/signups",
-        {
-            // set this to true if you want to check if the value exists or just want the event to fire once
-            // default false, so it listens continuously
-            singleEvent: true,
-            // order by company.country
-            orderBy: {
-                type: firebase.QueryOrderByType.CHILD,
-                value: 'UID' // mandatory when type is 'child'
-            },
-            // but only companies named 'Telerik'
-            // (this range relates to the orderBy clause)
-            range: {
-                type: firebase.QueryRangeType.EQUAL_TO,
-                value: config.uid
-            },
-        }
-    );
-};
-
-// Subscribing to a training
-exports.subscribe = function (currentID) {
-
-    firebase.push(
+    firebase.remove(
         "/signups",
         {UID: config.uid, trainingID: currentID}
     );
 
+    dialogsModule.alert({
+        message: "Unsubscribed from the training!",
+        okButtonText: "OK"
+    });
+
 };
 
-
-// Store data - an array of JSON objects
-// JS.Date.toJSON = YYYY-MM-DDTHH:mm:ss.sssZ
-exports.pushDB_1 = function (result) {
-    firebase.setValue(
-        "/Groceries",
-        [
-            {UID: config.uid, id: "0", type: "Gymnastics", starts: "2016-12-24T09:00:00", partic_max: "8", partic_current: "3"},
-            {UID: config.uid, id: "1", type: "Team Workout", starts: "2016-12-24T11:00:00", partic_max: "8", partic_current: "3"},
-            {UID: config.uid, id: "2", type: "Mobility", starts: "2016-12-25T09:00:00", partic_max: "8", partic_current: "3"},
-            {UID: config.uid, id: "3", type: "Strength", starts: "2016-12-25T11:00:00", partic_max: "8", partic_current: "3"},
-            {UID: config.uid, id: "4", type: "Gymnastics", starts: "2016-12-26T09:00:00", partic_max: "8", partic_current: "3"}
-        ]
-    );
-    if (!result.error) {
-        console.log("Event type: " + result.type);
-        console.log("Key: " + result.key);
-        console.log("Value: " + JSON.stringify(result.value));
-    }
-};
-
-// to store an array of JSON objects
-// JS.Date.toJSON = YYYY-MM-DDTHH:mm:ss.sssZ
-exports.pushDB_2 = function (result) {
-    firebase.setValue(
-        "/signups",
-        [
-            {UID: config.uid, id: "0", trainingID: "0"},
-            {UID: config.uid, id: "1", trainingID: "1"},
-            {UID: config.uid, id: "2", trainingID: "2"},
-            {UID: config.uid, id: "3", trainingID: "3"},
-            {UID: config.uid, id: "4", trainingID: "4"}
-        ]
-    );
-    if (!result.error) {
-        console.log("Event type: " + result.type);
-        console.log("Key: " + result.key);
-        console.log("Value: " + JSON.stringify(result.value));
-    }
-};
-
-exports.consoleLog = function() {
-    page.bindingContext = signupData;
-    console.log("Test");
-    console.log("SignupList:" + signupList);
-    console.log("signupList:" + signupList);
-    console.log("signupData:" + signupData);
-    console.log("signupData:" + signupData);
+// Go back to previous page
+exports.onNavBtnTap = function () {
+    topmost.goBack();
 }

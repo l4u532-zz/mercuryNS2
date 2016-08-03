@@ -5,13 +5,15 @@
         </ActionBar>
     </Page.actionBar>
     <GridLayout rows="auto, *" columns="auto, *">
-        <Button col="0" text="PushDB" cssClass="link" tap="navToTrainings" />
-        <Button col="1" text="Signups" cssClass="link" tap="navToSignups" />
+        <Button col="1" text="My Signups" cssClass="link" tap="navToSignups" />
         <ListView items="{{ groceryList }}" id="groceryList" row="2" colSpan="2" itemTap="listViewItemTap">
             <ListView.itemTemplate>
                 <StackLayout columns="*, auto">
+                    <Label class="h1" text="Training type:" />
                     <Label text="{{ type }}" />
+                    <Label class="h1" text="Starting time:" />
                     <Label text="{{ starts }}" />
+                    <Label class="h1" text="Current participants:" />
                     <Label text="{{ partic_current }}" />
                 </StackLayout>
             </ListView.itemTemplate>

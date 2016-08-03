@@ -47,7 +47,7 @@ label {
 }
 
 button {
-  background-color: #6494AA;
+  background-color: white;
   padding: 8 12;
   margin: 4 10;
   font-size: 13;
@@ -55,7 +55,7 @@ button {
 }
 
 .button {
-  color: #ffffff;
+  color: black;
 }
 
 .button-positive {
@@ -67,7 +67,7 @@ button {
 }
 
 .button-state {
-  background-color: #64A4FF;
+  background-color: darkorange;
 }
 
 .button-company {

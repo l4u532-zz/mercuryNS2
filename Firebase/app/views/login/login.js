@@ -31,8 +31,3 @@ exports.signIn = function() {
             });
         });
 };
-
-exports.navigateAway = function() {
-    var topmost = frameModule.topmost();
-    topmost.navigate("views/newlist/newlist");
-};

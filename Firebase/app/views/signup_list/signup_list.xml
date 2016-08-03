@@ -1,16 +1,16 @@
 <Page loaded="loaded">
     <Page.actionBar>
         <ActionBar title="Signups">
-        <NavigationButton text="Go Back" android.systemIcon="ic_menu_back" tap="onNavBtnTap"/>
+            <NavigationButton text="Go Back" android.systemIcon="ic_menu_back" tap="onNavBtnTap"/>
         </ActionBar>
     </Page.actionBar>
                 <GridLayout rows="auto, *" columns="2*, *">
-                    <Label text="Your Signups" />
-                    <Button text="consoleLog" tap="consoleLog" row="0" col="1" />
                     <ListView items="{{ signupList }}" id="signupList" row="2" colSpan="2" itemTap="listViewItemTap">
                         <ListView.itemTemplate>
                             <StackLayout columns="*, auto">
+                                <Label class="h1" text="Training type:" />
                                 <Label text="{{ su_type }}" />
+                                <Label class="h1" text="Starting time:" />
                                 <Label text="{{ su_starts }}" />
                             </StackLayout>
                         </ListView.itemTemplate>

@@ -1,42 +1,17 @@
-var segmentedBarModule = require("ui/segmented-bar");
 var dialogsModule = require("ui/dialogs");
 var observableModule = require("data/observable");
-var observableArrayModule = require("data/observable-array");
-var viewModule = require("ui/core/view");
 var GroceryListViewModel = require("../../shared/view-models/grocery-list-view-model");
-var socialShare = require("nativescript-social-share");
-var swipeDelete = require("../../shared/utils/ios-swipe-delete");
 var frameModule = require("ui/frame");
 var page;
-var itemIndex;
-
 var groceryList = new GroceryListViewModel([]);
 var pageData = new observableModule.Observable({
     groceryList: groceryList
 });
-
-// remove later
 var config = require("../../shared/config");
 var firebase = require("nativescript-plugin-firebase");
 
 exports.loaded = function(args) {
     page = args.object;
-
-    if (page.ios) {
-        var listView = viewModule.getViewById(page, "groceryList");
-        swipeDelete.enable(listView, function(index) {
-            groceryList.delete(index);
-        });
-        var navigationBar = frameModule.topmost().ios.controller.navigationBar;
-        navigationBar.barTintColor = UIColor.colorWithRedGreenBlueAlpha(0.011, 0.278, 0.576, 1);
-        navigationBar.titleTextAttributes = new NSDictionary([UIColor.whiteColor()], [NSForegroundColorAttributeName]);
-        navigationBar.barStyle = 1;
-        navigationBar.tintColor = UIColor.whiteColor();
-
-        frameModule.topmost().ios.navBarVisibility = "always";
-
-    }
-    
     page.bindingContext = pageData;
 
     groceryList.empty();
@@ -44,44 +19,6 @@ exports.loaded = function(args) {
     groceryList.load().then(function() {
         pageData.set("isLoading", false);
     });
-};
-
-exports.add = function() {
-    // Check for empty submissions
-    if (pageData.get("grocery").trim() !== "") {
-        // Dismiss the keyboard
-        viewModule.getViewById(page, "grocery").dismissSoftInput();
-        groceryList.add(pageData.get("grocery"))
-            .catch(function() {
-                dialogsModule.alert({
-                    message: "An error occurred while adding an item to your list.",
-                    okButtonText: "OK"
-                });
-            });
-        // Empty the input field
-        pageData.set("grocery", "");
-    } else {
-        dialogsModule.alert({
-            message: "Enter a grocery item",
-            okButtonText: "OK"
-        });
-    }
-};
-
-exports.share = function() {
-    var list = [];
-    var finalList = "";
-    for (var i = 0, size = groceryList.length; i < size ; i++) {
-        list.push(groceryList.getItem(i).name);
-    }
-    var listString = list.join(", ").trim();
-    socialShare.shareText(listString);
-};
-
-exports.delete = function(args) {
-    var item = args.view.bindingContext;
-    var index = groceryList.indexOf(item);
-    groceryList.delete(index);
 };
 
 // Navigate to previous page
@@ -102,17 +39,9 @@ function listViewItemTap(args) {
 exports.listViewItemTap = listViewItemTap;
 
 
-// Query if training exists
+// Logic if training exists
 exports.tapBookingLogic = function (currentID) {
     var onQueryEvent = function(result) {
-        // note that the query returns 1 match at a time
-        // in the order specified in the query
-        if (!result.error) {
-            //console.log("Event type: " + result.type);
-            //console.log("Key: " + result.key);
-            //console.log("Value: " + JSON.stringify(result.value));
-        }
-
         var data = JSON.parse(JSON.stringify(result.value));
 
         for (var prop in data) {
@@ -123,7 +52,6 @@ exports.tapBookingLogic = function (currentID) {
                 console.log("Successfully subscribed to the training.");
             }
         }
-
     };
 
     firebase.query(
@@ -155,6 +83,11 @@ exports.subscribe = function (currentID, su_type, su_starts) {
         "/signups",
         {UID: config.uid, trainingID: currentID, su_type: su_type, su_starts: su_starts}
     );
+
+    dialogsModule.alert({
+        message: "Subscribed to the training!",
+        okButtonText: "OK"
+    });
 
 };
 

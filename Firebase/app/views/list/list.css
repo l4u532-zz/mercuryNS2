@@ -6,6 +6,9 @@ Label {
     horizontal-align: left;
     vertical-align: center;
 }
+Label.h1 {
+    font-weight: bold;
+}
 TextField {
     border-width: 5;
     border-style: solid;
